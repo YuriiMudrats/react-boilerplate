@@ -1,20 +1,24 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const isProd = process.env.NODE_ENV === 'production';
 
 module.exports = {
-  entry: "./src/index.js",
+  mode: isProd ? 'production' : 'development',
+  entry: "./src/index.tsx",
+  devtool: 'inline-source-map',
   output: {
     path: path.join(__dirname, "/dist"),
-    filename: "index_bundle.js"
+    filename: "index.min.js"
+  },  
+  resolve: {
+    extensions: [ '.tsx', '.ts', '.js' ],
   },
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
+        test: /\.tsx?$/,
+        use: 'ts-loader',
         exclude: /node_modules/,
-        use: {
-          loader: "babel-loader"
-        },
       },
       {
         test: /\.css$/,
