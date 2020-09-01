@@ -13,6 +13,7 @@ module.exports = {
   resolve: {
     extensions: [ '.tsx', '.ts', '.js' ],
   },
+  devtool: "source-map",
   module: {
     rules: [
       {
@@ -21,9 +22,9 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
-        test: /\.css$/,
-        use: ["style-loader", "css-loader"]
-      }
+         test: /\.scss$/, use: [ "style-loader", "css-loader", "sass-loader" ] ,
+      },
+      { enforce: "pre", test: /\.js$/, loader: "source-map-loader" }
     ]
   },
   plugins: [
