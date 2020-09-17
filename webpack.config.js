@@ -5,10 +5,14 @@ const isProd = process.env.NODE_ENV === 'production';
 module.exports = {
   mode: isProd ? 'production' : 'development',
   entry: "./src/index.tsx",
-  devtool: 'inline-source-map',
+  devtool: 'inline-source-map',  
+    devServer: {
+      contentBase: './dist',
+     hot: true,
+    },
   output: {
     path: path.join(__dirname, "/dist"),
-    filename: "index.min.js"
+    filename: "[name].bundel.js"
   },  
   resolve: {
     extensions: [ '.tsx', '.ts', '.js' ],
@@ -19,7 +23,7 @@ module.exports = {
       {
         test: /\.tsx?$/,
         use: 'ts-loader',
-        exclude: /node_modules/,
+        exclude: /node_modules/       
       },
       {
          test: /\.scss$/, use: [ "style-loader", "css-loader", "sass-loader" ] ,
@@ -29,7 +33,8 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./src/index.html"
+      template: "./src/index.html",
+      title: 'Hot Module Replacement'
     })
   ]
 };
